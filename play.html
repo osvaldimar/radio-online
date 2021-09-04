@@ -1,0 +1,172 @@
+<html>
+	<head>
+		<meta name="viewport" content="width=device-width">
+		<!-- Latest compiled and minified CSS -->
+		<link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.4.1/css/bootstrap.min.css">
+
+		<!-- jQuery library -->
+		<script src="https://ajax.googleapis.com/ajax/libs/jquery/3.5.1/jquery.min.js"></script>
+
+		<!-- Latest compiled JavaScript -->
+		<script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.4.1/js/bootstrap.min.js"></script>
+	</head>
+	<body>
+
+		<div class="container">
+			<h2><span> RADIO ONLINE >>> </span><span id="nomeRadio"> ... </span></h2>
+			<p>Rádio online</p>
+			<div class="panel-group">
+				<div class="panel panel-info">
+					<div class="panel-heading">Tocar rádio</div>
+					<div class="panel-body">
+						<br/>
+
+						<button type="button" class="btn btn-primary" onClick="play('Preview')"><< Rádio Anterior <<</button>
+						<button type="button" class="btn btn-success" onClick="play('Play/Pause')">Play/Pause</button>
+						<button type="button" class="btn btn-primary" onClick="play('Next')">>> Próxima Rádio >></button>
+
+						<br/><br/><br/>
+						
+						<div class="well">
+							<h4><div id="linkRadios">Link Radios</div></h4>
+						</div>
+
+						<br/><br/>
+
+						<div id="videos" style="display: none;">
+							<video id="audio1" controls="" preload="auto" name="media">
+								<source src="https://radio.truckers.fm/" type="audio/mpeg">
+							</video>
+							<br/>
+							<video id="audio2" controls="" preload="auto" name="media">
+								<source src="http://radio.trucksim.fm:8000/stream" type="audio/mpeg">
+							</video>
+							<br/>
+							<video id="audio3" controls="" preload="auto" name="media">
+								<source src="http://live.hunterfm.com/pop_high?origin=/live" type="audio/mpeg">
+							</video>
+							<br/>
+							<video id="audio4" controls="" preload="auto" name="media">
+								<source src="http://radiotrucker.com/pt/play/55723/jovem-pam-sp" type="audio/mpeg">
+							</video>
+							<br/>
+							<video id="audio5" controls="" preload="auto" name="media">
+								<source src="http://radiotrucker.com/pt/play/55723/radio-mix-fm-106-3" type="audio/mpeg">
+							</video>
+							<br/>
+							<video id="audio6" controls="" preload="auto" name="media">
+								<source src="http://nashe1.hostingradio.ru/ultra-128.mp3" type="audio/mpeg">
+							</video>
+							
+						</div>
+					</div>
+				</div>
+			</div>
+		</div>
+
+	</body>
+
+	<script type="text/javascript">
+	
+		var audioRadios = [
+			"audio1",
+			"audio2",
+			"audio3",
+			"audio4",
+			"audio5",
+			"audio6"
+		];
+		var nomeRadios = [
+			"TRUCKERS FM - EN",
+			"TRUCK SIM FM - EN",
+			"HUNTER FM POP",
+			"JOVEM PAM - SP",
+			"MIX FM 106.3 - BR",
+			"ALTERNATIVE ROCK - RU"
+		];
+		var totalRadio = 6;
+		var radioAtual = 0;
+
+		window.onload = function(){
+			document.getElementById('nomeRadio').textContent = nomeRadios[radioAtual];
+			printLinkRadios(radioAtual);
+		}
+
+		function play(tocar) {
+			var audio = document.getElementById(audioRadios[radioAtual]);
+
+			if(tocar == "Next"){
+				audio.pause();
+				proximaRadio();
+			}else if(tocar == "Preview"){
+				audio.pause();
+				radioAnterior();
+			}else{
+				if(audio.paused){
+					audio.load();
+					audio.play();
+				}else{
+					audio.pause();
+				}
+			}
+
+			document.getElementById('nomeRadio').textContent = nomeRadios[radioAtual];
+			printLinkRadios(radioAtual);
+		}
+
+		function proximaRadio(){
+			if(radioAtual == totalRadio-1){
+				radioAtual = 0;
+			}else{
+				radioAtual = radioAtual + 1;
+			}
+			var audio = document.getElementById(audioRadios[radioAtual]);
+			audio.load();
+			audio.play();
+		}
+
+		function radioAnterior(){
+			if(radioAtual == 0){
+				radioAtual = totalRadio-1;
+			}else{
+				radioAtual = radioAtual - 1;
+			}
+			var audio = document.getElementById(audioRadios[radioAtual]);
+			audio.load();
+			audio.play();
+		}
+
+		function printLinkRadios(current){
+			var resultHtml = "";
+			for(var i = 0; i < totalRadio; i++){
+
+				var strClass = "text-primary";
+				if(i == current){
+					strClass = "text-danger"
+				}
+
+				var strHtml = "<a class='" +strClass+ "' href='#' onClick='tocarLinkRadio(" +i+ ");'>" +nomeRadios[i]+ "</a>";
+				resultHtml = resultHtml + strHtml;
+
+				if(i < totalRadio-1){
+					resultHtml = resultHtml + " | ";
+				}
+			}
+			document.getElementById('linkRadios').innerHTML = resultHtml;
+		}
+
+		function tocarLinkRadio(current){
+			var audio = document.getElementById(audioRadios[radioAtual]);
+			audio.pause();
+
+			radioAtual = current;
+			audio = document.getElementById(audioRadios[radioAtual]);
+			audio.load();
+			audio.play();
+
+			document.getElementById('nomeRadio').textContent = nomeRadios[radioAtual];
+			printLinkRadios(radioAtual);
+		}
+
+	</script>
+</html>
