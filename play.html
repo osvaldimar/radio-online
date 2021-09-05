@@ -57,6 +57,13 @@
 							<video id="audio6" controls="" preload="auto" name="media">
 								<source src="http://nashe1.hostingradio.ru/ultra-128.mp3" type="audio/mpeg">
 							</video>
+							<video id="audio7" controls="" preload="auto" name="media">
+								<source src="http://radiotrucker.com/pt/play/55723/100-8-the-hawk-bigr" type="audio/mpeg">
+							</video>
+							<video id="audio8" controls="" preload="auto" name="media">
+								<source src="http://radiotrucker.com/pt/play/55723/big-r-radio-80-metal-fm" type="audio/mpeg">
+							</video>
+							
 							
 						</div>
 					</div>
@@ -74,7 +81,9 @@
 			"audio3",
 			"audio4",
 			"audio5",
-			"audio6"
+			"audio6",
+			"audio7",
+			"audio8"
 		];
 		var nomeRadios = [
 			"TRUCKERS FM - EN",
@@ -82,9 +91,11 @@
 			"HUNTER FM POP",
 			"JOVEM PAM - SP",
 			"MIX FM 106.3 - BR",
-			"ALTERNATIVE ROCK - RU"
+			"ALTERNATIVE ROCK - RU",
+			"THE HAWK HIP HOP - US",
+			"BigR RADIO METAL FM - US"
 		];
-		var totalRadio = 6;
+		var totalRadio = 8;
 		var radioAtual = 0;
 
 		window.onload = function(){
@@ -137,7 +148,7 @@
 		}
 
 		function printLinkRadios(current){
-			var resultHtml = "";
+			var resultHtml = "<ul>";
 			for(var i = 0; i < totalRadio; i++){
 
 				var strClass = "text-primary";
@@ -145,13 +156,14 @@
 					strClass = "text-danger"
 				}
 
-				var strHtml = "<a class='" +strClass+ "' href='#' onClick='tocarLinkRadio(" +i+ ");'>" +nomeRadios[i]+ "</a>";
+				var strHtml = "<li><a class='" +strClass+ "' href='#' onClick='tocarLinkRadio(" +i+ ");'>" +nomeRadios[i]+ "</a></li>";
 				resultHtml = resultHtml + strHtml;
 
-				if(i < totalRadio-1){
-					resultHtml = resultHtml + " | ";
-				}
+				// if(i < totalRadio-1){
+				// 	resultHtml = resultHtml + " | ";
+				// }
 			}
+			resultHtml = resultHtml + "</ul>"
 			document.getElementById('linkRadios').innerHTML = resultHtml;
 		}
 
